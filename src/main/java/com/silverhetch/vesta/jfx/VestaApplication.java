@@ -1,11 +1,13 @@
 package com.silverhetch.vesta.jfx;
 
+import com.silverhetch.clotho.log.BeautyLog;
 import javafx.application.Application;
 import javafx.application.Platform;
 import javafx.scene.Scene;
-import javafx.scene.input.TransferMode;
+import javafx.scene.input.*;
 import javafx.scene.layout.Background;
 import javafx.scene.layout.BackgroundFill;
+import javafx.scene.layout.Pane;
 import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
@@ -16,7 +18,13 @@ import java.net.URI;
 public class VestaApplication extends Application {
     @Override
     public void start(Stage stage) throws Exception {
+        Scene scene = new Scene(rootView(), 640, 480);
+        handlingClipBoard(scene);
+        stage.setScene(scene);
+        stage.show();
+    }
 
+    private Pane rootView() {
         StackPane root = new StackPane();
         root.setOnDragOver(dragEvent -> {
             if (dragEvent.getDragboard().hasString()) {
@@ -25,23 +33,22 @@ public class VestaApplication extends Application {
             dragEvent.consume();
         });
         root.setOnDragDropped(dragEvent -> {
-            new Thread(() -> {
-                try {
-                    if (Desktop.isDesktopSupported() && Desktop.getDesktop().isSupported(Desktop.Action.BROWSE)) {
-
-                    }
-                } catch (Exception e) {
-                    e.printStackTrace();
-                }
-            }).start();
+            inputContent(dragEvent.getDragboard().getString());
             dragEvent.setDropCompleted(true);
             dragEvent.consume();
         });
         root.setBackground(new Background(new BackgroundFill(Paint.valueOf("#000"), null, null)));
+        return root;
+    }
 
-        Scene scene = new Scene(root, 640, 480);
+    private void handlingClipBoard(final Scene scene) {
+        scene.getAccelerators().put(
+                new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN),
+                () -> inputContent(Clipboard.getSystemClipboard().getString())
+        );
+    }
 
-        stage.setScene(scene);
-        stage.show();
+    private void inputContent(String content) {
+        new BeautyLog().fetch().info("Content received: " + content);
     }
 }
