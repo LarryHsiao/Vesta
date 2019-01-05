@@ -27,13 +27,15 @@ public class VestaApplication extends Application {
     private Pane rootView() {
         StackPane root = new StackPane();
         root.setOnDragOver(dragEvent -> {
-            if (dragEvent.getDragboard().hasString()) {
+            if (dragEvent.getDragboard().hasString()
+                    || dragEvent.getDragboard().hasFiles()
+                    || dragEvent.getDragboard().hasUrl()) {
                 dragEvent.acceptTransferModes(TransferMode.COPY_OR_MOVE);
             }
             dragEvent.consume();
         });
         root.setOnDragDropped(dragEvent -> {
-            inputContent(dragEvent.getDragboard().getString());
+            inputContent(dragEvent.getDragboard());
             dragEvent.setDropCompleted(true);
             dragEvent.consume();
         });
@@ -44,8 +46,24 @@ public class VestaApplication extends Application {
     private void handlingClipBoard(final Scene scene) {
         scene.getAccelerators().put(
                 new KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN),
-                () -> inputContent(Clipboard.getSystemClipboard().getString())
+                () -> inputContent(Clipboard.getSystemClipboard())
         );
+    }
+
+    private void inputContent(Clipboard clipboard) {
+        if (clipboard.hasFiles()) {
+            inputContent(clipboard.getFiles().get(0).toURI().toASCIIString());
+            return;
+        }
+
+        if (clipboard.hasUrl()) {
+            inputContent(clipboard.getUrl());
+            return;
+        }
+
+        if (clipboard.hasString()) {
+            inputContent(clipboard.getString());
+        }
     }
 
     private void inputContent(String content) {
