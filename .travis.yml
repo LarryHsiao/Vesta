@@ -1,0 +1,6 @@
+language: java
+before_script:
+- sleep 3
+script:
+- jdk_switcher use oraclejdk8
+- "./gradlew build -x test unitTest --info"
