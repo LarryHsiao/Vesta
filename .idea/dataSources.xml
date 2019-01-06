@@ -7,5 +7,11 @@
       <jdbc-driver>org.h2.Driver</jdbc-driver>
       <jdbc-url>jdbc:h2:~/test</jdbc-url>
     </data-source>
+    <data-source source="LOCAL" name="test.h2 [2]" uuid="8acfb411-6caa-4205-a4b9-e703822454ab">
+      <driver-ref>h2.unified</driver-ref>
+      <synchronize>true</synchronize>
+      <jdbc-driver>org.h2.Driver</jdbc-driver>
+      <jdbc-url>jdbc:h2:~/test</jdbc-url>
+    </data-source>
   </component>
 </project>

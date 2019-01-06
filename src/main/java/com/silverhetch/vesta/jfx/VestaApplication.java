@@ -1,8 +1,11 @@
 package com.silverhetch.vesta.jfx;
 
 import com.silverhetch.clotho.log.BeautyLog;
+import com.silverhetch.vesta.arch.database.H2DbConn;
+import com.silverhetch.vesta.arch.database.Update;
+import com.silverhetch.vesta.target.Insert;
+import com.silverhetch.vesta.target.TargetDbConn;
 import javafx.application.Application;
-import javafx.application.Platform;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
 import javafx.scene.layout.Background;
@@ -12,8 +15,9 @@ import javafx.scene.layout.StackPane;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
 
-import java.awt.*;
-import java.net.URI;
+import java.io.File;
+
+import static java.io.File.separator;
 
 public class VestaApplication extends Application {
     @Override
@@ -68,5 +72,18 @@ public class VestaApplication extends Application {
 
     private void inputContent(String content) {
         new BeautyLog().fetch().info("Content received: " + content);
+
+        try {
+            new Update(
+                    new TargetDbConn(
+                            new H2DbConn(
+                                    System.getProperty("user.dir") + separator + "build" + separator + "db"
+                            )
+                    ),
+                    new Insert(content)
+            ).execute();
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
     }
 }
