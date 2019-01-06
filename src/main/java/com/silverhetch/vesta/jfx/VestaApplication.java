@@ -3,19 +3,15 @@ package com.silverhetch.vesta.jfx;
 import com.silverhetch.clotho.log.BeautyLog;
 import com.silverhetch.vesta.arch.database.H2DbConn;
 import com.silverhetch.vesta.arch.database.Update;
+import com.silverhetch.vesta.jfx.util.ExceptionDialog;
 import com.silverhetch.vesta.target.Insert;
 import com.silverhetch.vesta.target.TargetDbConn;
 import javafx.application.Application;
 import javafx.scene.Scene;
 import javafx.scene.input.*;
-import javafx.scene.layout.Background;
-import javafx.scene.layout.BackgroundFill;
-import javafx.scene.layout.Pane;
-import javafx.scene.layout.StackPane;
+import javafx.scene.layout.*;
 import javafx.scene.paint.Paint;
 import javafx.stage.Stage;
-
-import java.io.File;
 
 import static java.io.File.separator;
 
@@ -83,7 +79,7 @@ public class VestaApplication extends Application {
                     new Insert(content)
             ).execute();
         } catch (Exception e) {
-            e.printStackTrace();
+            new ExceptionDialog(e).fetch();
         }
     }
 }
