@@ -1,6 +1,7 @@
 package com.silverhetch.vesta.arch.database;
 
 import com.silverhetch.clotho.Source;
+import com.silverhetch.vesta.arch.database.sql.Sql;
 
 import java.sql.Connection;
 import java.sql.SQLException;

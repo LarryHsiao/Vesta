@@ -1,6 +1,6 @@
 package com.silverhetch.vesta.tag;
 
-import com.silverhetch.vesta.arch.database.Sql;
+import com.silverhetch.vesta.arch.database.sql.Sql;
 
 /**
  * Sql for initial the tag table.

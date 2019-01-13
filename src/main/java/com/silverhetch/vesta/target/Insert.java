@@ -1,6 +1,6 @@
 package com.silverhetch.vesta.target;
 
-import com.silverhetch.vesta.arch.database.Sql;
+import com.silverhetch.vesta.arch.database.sql.Sql;
 
 public class Insert implements Sql {
     private final String url;
