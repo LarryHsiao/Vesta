@@ -14,6 +14,9 @@ import javafx.stage.Stage
 import java.io.File.separator
 import java.net.URI
 
+/**
+ * Entry point of Vesta.
+ */
 class VestaApplication : Application() {
     @Throws(Exception::class)
     override fun start(stage: Stage) {
