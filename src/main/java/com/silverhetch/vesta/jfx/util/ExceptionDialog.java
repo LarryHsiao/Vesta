@@ -11,7 +11,7 @@ import java.io.PrintWriter;
 import java.io.StringWriter;
 
 /**
- * @todo Replace with library Clotho-Desktop (https://github.com/LarryHsiao/Clotho-Desktop)
+ * @todo #1 Replace with library Clotho-Desktop (https://github.com/LarryHsiao/Clotho-Desktop)
  */
 public class ExceptionDialog implements Source<Void> {
     private final Exception ex;
