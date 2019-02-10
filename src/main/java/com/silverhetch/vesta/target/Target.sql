@@ -10,3 +10,4 @@ from target;
 insert into target(uri)
 values (?);
 
+delete from target where uri=?;
