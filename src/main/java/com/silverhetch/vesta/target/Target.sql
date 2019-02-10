@@ -1,13 +1,13 @@
-create table if not exists target
+create table if not exists targets
 (
   uri char unique
 );
 
-drop table target;
+drop table targets;
 select *
-from target;
+from targets;
 
-insert into target(uri)
+insert into targets(uri)
 values (?);
 
-delete from target where uri=?;
+delete from targets where uri=?;
