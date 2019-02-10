@@ -1,0 +1,45 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<dataSource name="Vesta.db">
+  <database-model serializer="dbm" dbms="H2" family-id="H2" format-version="4.14">
+    <root id="1">
+      <ServerVersion>1.4.196</ServerVersion>
+    </root>
+    <database id="2" parent="1" name="VESTA.DB">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </database>
+    <schema id="3" parent="2" name="INFORMATION_SCHEMA"/>
+    <schema id="4" parent="2" name="PUBLIC">
+      <Current>1</Current>
+      <Visible>1</Visible>
+    </schema>
+    <table id="5" parent="4" name="TAG"/>
+    <table id="6" parent="4" name="TARGET"/>
+    <column id="7" parent="5" name="NAME">
+      <Position>1</Position>
+      <DataType>CHAR|1s</DataType>
+    </column>
+    <index id="8" parent="5" name="CONSTRAINT_INDEX_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="9" parent="5" name="CONSTRAINT_INDEX_1">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+    </key>
+    <column id="10" parent="6" name="URI">
+      <Position>1</Position>
+      <DataType>CHAR|1s</DataType>
+    </column>
+    <index id="11" parent="6" name="CONSTRAINT_INDEX_9">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>URI</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="12" parent="6" name="CONSTRAINT_INDEX_9">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>URI</ColNames>
+    </key>
+  </database-model>
+</dataSource>

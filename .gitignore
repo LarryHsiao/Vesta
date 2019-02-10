@@ -1,3 +1,5 @@
 build
 .gradle
 out
+**/.idea/workspace.xml
+**/.idea/tasks.xml
