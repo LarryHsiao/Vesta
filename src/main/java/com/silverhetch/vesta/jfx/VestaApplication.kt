@@ -1,6 +1,8 @@
 package com.silverhetch.vesta.jfx
 
 import com.silverhetch.clotho.log.BeautyLog
+import com.silverhetch.vesta.Vesta
+import com.silverhetch.vesta.VestaImpl
 import com.silverhetch.vesta.database.H2DB
 import com.silverhetch.vesta.jfx.util.ExceptionDialog
 import com.silverhetch.vesta.target.DBTargets
@@ -18,6 +20,8 @@ import java.net.URI
  * Entry point of Vesta.
  */
 class VestaApplication : Application() {
+    private val vesta: Vesta = VestaImpl()
+
     override fun start(stage: Stage) {
         val scene = Scene(rootView(), 640.0, 480.0)
         handlingClipBoard(scene)
@@ -45,7 +49,7 @@ class VestaApplication : Application() {
     }
 
     private fun handlingClipBoard(scene: Scene) {
-        scene.accelerators[KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN)] =Runnable{
+        scene.accelerators[KeyCodeCombination(KeyCode.V, KeyCombination.CONTROL_DOWN)] = Runnable {
             inputContent(Clipboard.getSystemClipboard())
         }
     }
@@ -70,11 +74,9 @@ class VestaApplication : Application() {
         BeautyLog().fetch().info("Content received: $content")
 
         try {
-            DBTargets(
-                H2DB(System.getProperty("user.home")).connection()
-            ).apply {
+            vesta.target().apply {
                 init()
-                add(URI(content) )
+                add(URI(content))
             }
         } catch (e: Exception) {
             ExceptionDialog(e).fetch()
