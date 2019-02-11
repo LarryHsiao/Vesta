@@ -18,7 +18,6 @@ import java.net.URI
  * Entry point of Vesta.
  */
 class VestaApplication : Application() {
-    @Throws(Exception::class)
     override fun start(stage: Stage) {
         val scene = Scene(rootView(), 640.0, 480.0)
         handlingClipBoard(scene)
@@ -72,8 +71,9 @@ class VestaApplication : Application() {
 
         try {
             DBTargets(
-                H2DB(System.getProperty("user.dir")).connection()
+                H2DB(System.getProperty("user.home")).connection()
             ).apply {
+                init()
                 add(URI(content) )
             }
         } catch (e: Exception) {
