@@ -3,6 +3,9 @@ package com.silverhetch.vesta
 import com.silverhetch.vesta.jfx.VestaApplication
 import javafx.application.Application
 
+/**
+ * Entry point of Vesta
+ */
 class Main {
     companion object {
         @JvmStatic

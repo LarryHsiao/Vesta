@@ -2,6 +2,9 @@ package com.silverhetch.vesta.tag
 
 import java.sql.Connection
 
+/**
+ * Tags that stored in database.
+ */
 class DBTags(private val connection: Connection) : Tags {
     override fun init() {
         connection.createStatement().execute("""

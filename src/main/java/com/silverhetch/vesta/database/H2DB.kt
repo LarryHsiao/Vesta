@@ -5,6 +5,9 @@ import java.io.File
 import java.sql.Connection
 import java.sql.DriverManager
 
+/**
+ * A database of H2.
+ */
 class H2DB(private val path: String) : Database {
     override fun connection(): Connection {
         Class.forName("org.h2.Driver")

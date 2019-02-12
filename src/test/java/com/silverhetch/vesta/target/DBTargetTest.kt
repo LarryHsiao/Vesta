@@ -32,4 +32,18 @@ class DBTargetTest {
             assertEquals(1, all().size)
         }
     }
+
+    @Test
+    fun delete_size() {
+        DBTargets(
+            H2DB(
+                Files.createTempDirectory("temp").toFile().absolutePath
+            ).connection()
+        ).apply {
+            init()
+            add(URI("http://phantom.uri"))
+            all()[0].delete()
+            assertEquals(1, all().size)
+        }
+    }
 }

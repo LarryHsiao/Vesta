@@ -8,6 +8,7 @@ import com.silverhetch.vesta.target.DBTargets
 import com.silverhetch.vesta.target.Targets
 import java.sql.Connection
 
+// @todo #2 Tag-Target mapping table
 class VestaImpl : Vesta {
     private val dbConnection: Connection by lazy {
         H2DB(System.getProperty("user.home")).connection()
