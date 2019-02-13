@@ -29,6 +29,7 @@ class DBAttachedTags(private val connection: Connection, private val target: Tar
                         target,
                         DBTag(
                             connection,
+                            resultSet.getLong("id"),
                             name
                         )
                     )

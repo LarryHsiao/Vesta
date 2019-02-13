@@ -30,6 +30,7 @@ class DBTags(private val connection: Connection) : Tags {
                     val name = resultSet.getString("name")
                     result[name] = DBTag(
                         connection,
+                        resultSet.getLong("id"),
                         name
                     )
                 }
