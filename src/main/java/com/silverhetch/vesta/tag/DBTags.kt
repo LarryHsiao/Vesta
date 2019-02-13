@@ -10,29 +10,31 @@ class DBTags(private val connection: Connection) : Tags {
         connection.createStatement().execute("""
             CREATE TABLE IF NOT EXISTS tags
             (
+              id integer primary key auto_increment,
               name CHAR unique
             );""")
     }
 
     override fun add(name: String) {
-        connection.prepareStatement("""insert into tags values ( ? );""").use {
+        connection.prepareStatement("""insert into tags(name) values ( ? );""").use {
             it.setString(1, name)
             it.execute()
         }
     }
 
-    override fun all(): Array<Tag> {
+    override fun all(): Map<String, Tag> {
         connection.createStatement().use { statement ->
-            val result = ArrayList<Tag>()
+            val result = HashMap<String, Tag>()
             statement.executeQuery("""select * from tags""").use { resultSet ->
                 while (resultSet.next()) {
-                    result.add(DBTag(
+                    val name = resultSet.getString("name")
+                    result[name] = DBTag(
                         connection,
-                        resultSet.getString("name")
-                    ))
+                        name
+                    )
                 }
             }
-            return result.toTypedArray()
+            return result
         }
     }
 }

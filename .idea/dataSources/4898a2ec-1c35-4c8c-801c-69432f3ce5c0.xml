@@ -13,5 +13,56 @@
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
+    <table id="5" parent="4" name="ATTACHMENTS"/>
+    <table id="6" parent="4" name="TAGS"/>
+    <column id="7" parent="5" name="TARGET_ID">
+      <Position>1</Position>
+      <DataType>INTEGER(10)|4s</DataType>
+    </column>
+    <column id="8" parent="5" name="TAG_ID">
+      <Position>2</Position>
+      <DataType>INTEGER(10)|4s</DataType>
+    </column>
+    <index id="9" parent="5" name="CONSTRAINT_INDEX_5">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>TARGET_ID
+TAG_ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="10" parent="5" name="CONSTRAINT_INDEX_5">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>TARGET_ID
+TAG_ID</ColNames>
+    </key>
+    <column id="11" parent="6" name="ID">
+      <Position>1</Position>
+      <DataType>INTEGER(10)|4s</DataType>
+      <NotNull>1</NotNull>
+      <SequenceIdentity>1</SequenceIdentity>
+      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_5CAC0249_AA62_40A6_88C7_E3E9C23968F0)</DefaultExpression>
+    </column>
+    <column id="12" parent="6" name="NAME">
+      <Position>2</Position>
+      <DataType>CHAR|1s</DataType>
+    </column>
+    <index id="13" parent="6" name="PRIMARY_KEY_2">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <index id="14" parent="6" name="CONSTRAINT_INDEX_2">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+      <Unique>1</Unique>
+    </index>
+    <key id="15" parent="6" name="CONSTRAINT_2">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>ID</ColNames>
+      <Primary>1</Primary>
+    </key>
+    <key id="16" parent="6" name="CONSTRAINT_INDEX_2">
+      <NameSurrogate>1</NameSurrogate>
+      <ColNames>NAME</ColNames>
+    </key>
   </database-model>
 </dataSource>

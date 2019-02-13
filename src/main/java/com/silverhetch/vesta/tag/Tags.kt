@@ -12,7 +12,7 @@ interface Tags {
     /**
      * All the [Tag] object
      */
-    fun all(): Array<Tag>
+    fun all(): Map<String,Tag>
 
     /**
      * Add new [Tag]

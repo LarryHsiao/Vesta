@@ -11,6 +11,7 @@ class DBTargets(private val connection: Connection) : Targets {
         connection.createStatement().execute("""
             create table if not exists targets
             (
+              id integer primary key auto_increment,
               uri char unique
             );"""
         )
@@ -30,6 +31,7 @@ class DBTargets(private val connection: Connection) : Targets {
                 while (resultSet.next()) {
                     targets.add(DBTarget(
                         connection,
+                        resultSet.getLong("id"),
                         resultSet.getString("uri")
                     ))
                 }
