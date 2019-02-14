@@ -19,5 +19,5 @@ interface Downloads {
     /**
      * All the uri which not done yet.
      */
-    fun all(): Map<String, URI>
+    fun all(): Map<String, Download>
 }

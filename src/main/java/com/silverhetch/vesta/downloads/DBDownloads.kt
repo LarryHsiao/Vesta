@@ -22,15 +22,19 @@ class DBDownloads(private val connection: Connection) : Downloads {
         }
     }
 
-    override fun all(): Map<String, URI> {
+    override fun all(): Map<String, Download> {
         connection.prepareStatement("""
            select * from downloads;
         """).use { statement ->
             statement.executeQuery().use {
-                val result = HashMap<String, URI>()
+                val result = HashMap<String, Download>()
                 while (it.next()) {
                     val uri = it.getString("uri")
-                    result[uri] = URI(uri)
+                    result[uri] = DBDownload(
+                        connection,
+                        it.getLong("id"),
+                        URI(uri)
+                    )
                 }
                 return result
             }
