@@ -1,10 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<dataSource name="vesta.db.mv.db">
+<dataSource name="vesta.db">
   <database-model serializer="dbm" dbms="H2" family-id="H2" format-version="4.14">
     <root id="1">
       <ServerVersion>1.4.196</ServerVersion>
     </root>
-    <database id="2" parent="1" name="VESTA.DB.MV.DB">
+    <database id="2" parent="1" name="VESTA.DB">
       <Current>1</Current>
       <Visible>1</Visible>
     </database>
@@ -13,87 +13,58 @@
       <Current>1</Current>
       <Visible>1</Visible>
     </schema>
-    <table id="5" parent="4" name="ATTACHMENTS"/>
-    <table id="6" parent="4" name="DOWNLOADS"/>
-    <table id="7" parent="4" name="TAGS"/>
-    <column id="8" parent="5" name="TARGET_ID">
-      <Position>1</Position>
-      <DataType>INTEGER(10)|4s</DataType>
-    </column>
-    <column id="9" parent="5" name="TAG_ID">
-      <Position>2</Position>
-      <DataType>INTEGER(10)|4s</DataType>
-    </column>
-    <index id="10" parent="5" name="CONSTRAINT_INDEX_5">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>TARGET_ID
-TAG_ID</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="11" parent="5" name="CONSTRAINT_INDEX_5">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>TARGET_ID
-TAG_ID</ColNames>
-    </key>
-    <column id="12" parent="6" name="ID">
+    <table id="5" parent="4" name="DOWNLOADS"/>
+    <table id="6" parent="4" name="TARGETS"/>
+    <column id="7" parent="5" name="ID">
       <Position>1</Position>
       <DataType>INTEGER(10)|4s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
-      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_DCDE6950_E460_4EFD_B9C6_D9FAE98B0300)</DefaultExpression>
+      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_8C32C259_4501_4F0E_A704_BFD75CB86355)</DefaultExpression>
     </column>
-    <column id="13" parent="6" name="URI">
+    <column id="8" parent="5" name="URI">
       <Position>2</Position>
       <DataType>CHAR|1s</DataType>
     </column>
-    <index id="14" parent="6" name="PRIMARY_KEY_F">
+    <index id="9" parent="5" name="PRIMARY_KEY_F">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="15" parent="6" name="CONSTRAINT_INDEX_F">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>URI</ColNames>
-      <Unique>1</Unique>
-    </index>
-    <key id="16" parent="6" name="CONSTRAINT_F">
+    <key id="10" parent="5" name="CONSTRAINT_F">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="17" parent="6" name="CONSTRAINT_INDEX_F">
-      <NameSurrogate>1</NameSurrogate>
-      <ColNames>URI</ColNames>
-    </key>
-    <column id="18" parent="7" name="ID">
+    <column id="11" parent="6" name="ID">
       <Position>1</Position>
       <DataType>INTEGER(10)|4s</DataType>
       <NotNull>1</NotNull>
       <SequenceIdentity>1</SequenceIdentity>
-      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_5CAC0249_AA62_40A6_88C7_E3E9C23968F0)</DefaultExpression>
+      <DefaultExpression>(NEXT VALUE FOR PUBLIC.SYSTEM_SEQUENCE_91C84F0D_5C64_47D4_98FF_A870C7120446)</DefaultExpression>
     </column>
-    <column id="19" parent="7" name="NAME">
+    <column id="12" parent="6" name="URI">
       <Position>2</Position>
       <DataType>CHAR|1s</DataType>
     </column>
-    <index id="20" parent="7" name="PRIMARY_KEY_2">
+    <index id="13" parent="6" name="PRIMARY_KEY_C">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Unique>1</Unique>
     </index>
-    <index id="21" parent="7" name="CONSTRAINT_INDEX_2">
+    <index id="14" parent="6" name="CONSTRAINT_INDEX_C">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>NAME</ColNames>
+      <ColNames>URI</ColNames>
       <Unique>1</Unique>
     </index>
-    <key id="22" parent="7" name="CONSTRAINT_2">
+    <key id="15" parent="6" name="CONSTRAINT_C">
       <NameSurrogate>1</NameSurrogate>
       <ColNames>ID</ColNames>
       <Primary>1</Primary>
     </key>
-    <key id="23" parent="7" name="CONSTRAINT_INDEX_2">
+    <key id="16" parent="6" name="CONSTRAINT_INDEX_C">
       <NameSurrogate>1</NameSurrogate>
-      <ColNames>NAME</ColNames>
+      <ColNames>URI</ColNames>
     </key>
   </database-model>
 </dataSource>

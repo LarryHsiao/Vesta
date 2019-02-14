@@ -3,8 +3,12 @@ package com.silverhetch.vesta.jfx
 import com.silverhetch.clotho.log.BeautyLog
 import com.silverhetch.vesta.Vesta
 import com.silverhetch.vesta.VestaImpl
+import com.silverhetch.vesta.downloads.DBDownloads
+import com.silverhetch.vesta.downloads.DownloadServiceImpl
+import com.silverhetch.vesta.downloads.Downloads
 import com.silverhetch.vesta.jfx.util.ExceptionDialog
 import com.silverhetch.vesta.target.DBTargets
+import com.silverhetch.vesta.target.Targets
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.input.*
@@ -14,6 +18,7 @@ import javafx.scene.layout.Pane
 import javafx.scene.layout.StackPane
 import javafx.scene.paint.Paint
 import javafx.stage.Stage
+import java.io.File
 import java.net.URI
 import java.nio.file.Files
 
@@ -22,7 +27,9 @@ import java.nio.file.Files
  */
 class VestaApplication : Application() {
     private val vesta: Vesta = VestaImpl(
-        Files.createTempDirectory("TempDirectory").toFile()
+        File(
+            System.getProperty("user.home") + File.separator + "abc"
+        ).apply { mkdirs() }
     )
 
     override fun start(stage: Stage) {
@@ -74,17 +81,21 @@ class VestaApplication : Application() {
     }
 
     private fun inputContent(content: String) {
-        BeautyLog().fetch().info("Content received: $content")
-
         try {
-            DBTargets(vesta.dbConnection()).apply {
-                init()
-                add(URI(content))
+            BeautyLog().fetch().info("Content received: $content")
+            val targets: Targets = DBTargets(vesta.dbConnection()).apply { init() }
+            val downloads: Downloads = DBDownloads(vesta.dbConnection()).apply { init() }
+            if (content.startsWith("http")) {
+                downloads.new(URI(content))
+                DownloadServiceImpl(downloads, vesta.root()).start {
+                    targets.add(URI(content))
+                }
+            } else {
+                targets.add(URI(content))
             }
         } catch (e: Exception) {
             ExceptionDialog(e).fetch()
         }
-
     }
 
     override fun stop() {

@@ -9,7 +9,7 @@ import java.sql.Connection
  */
 class VestaImpl(private val root: File) : Vesta {
     private val dbConnection: Connection by lazy {
-        H2DB(System.getProperty("user.home")).connection()
+        H2DB(root.absolutePath).connection()
     }
 
     override fun root(): File {
