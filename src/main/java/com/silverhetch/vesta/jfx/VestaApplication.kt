@@ -3,24 +3,27 @@ package com.silverhetch.vesta.jfx
 import com.silverhetch.clotho.log.BeautyLog
 import com.silverhetch.vesta.Vesta
 import com.silverhetch.vesta.VestaImpl
-import com.silverhetch.vesta.database.H2DB
 import com.silverhetch.vesta.jfx.util.ExceptionDialog
 import com.silverhetch.vesta.target.DBTargets
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.input.*
-import javafx.scene.layout.*
+import javafx.scene.layout.Background
+import javafx.scene.layout.BackgroundFill
+import javafx.scene.layout.Pane
+import javafx.scene.layout.StackPane
 import javafx.scene.paint.Paint
 import javafx.stage.Stage
-
-import java.io.File.separator
 import java.net.URI
+import java.nio.file.Files
 
 /**
  * Entry point of Vesta.
  */
 class VestaApplication : Application() {
-    private val vesta: Vesta = VestaImpl()
+    private val vesta: Vesta = VestaImpl(
+        Files.createTempDirectory("TempDirectory").toFile()
+    )
 
     override fun start(stage: Stage) {
         val scene = Scene(rootView(), 640.0, 480.0)
@@ -74,7 +77,7 @@ class VestaApplication : Application() {
         BeautyLog().fetch().info("Content received: $content")
 
         try {
-            vesta.target().apply {
+            DBTargets(vesta.dbConnection()).apply {
                 init()
                 add(URI(content))
             }
@@ -82,5 +85,10 @@ class VestaApplication : Application() {
             ExceptionDialog(e).fetch()
         }
 
+    }
+
+    override fun stop() {
+        super.stop()
+        vesta.shutdown()
     }
 }

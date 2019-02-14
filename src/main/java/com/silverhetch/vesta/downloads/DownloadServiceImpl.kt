@@ -3,8 +3,6 @@ package com.silverhetch.vesta.downloads
 import java.io.File
 import java.io.FileOutputStream
 import java.nio.channels.Channels
-import java.nio.channels.ReadableByteChannel
-import java.nio.file.Path
 import java.nio.file.Paths
 import java.util.concurrent.ExecutorService
 import java.util.concurrent.Executors
@@ -15,8 +13,8 @@ import java.util.concurrent.Executors
  * This class is good for small files(<10MB) because we don`t have any progress monitoring
  * which may cause UI hangs too long.
  */
-class DownloadExecutionImpl(private val downloads: Downloads,
-                            private val targetDir: File) : DownloadExecution {
+class DownloadServiceImpl(private val downloads: Downloads,
+                          private val targetDir: File) : DownloadService {
     private lateinit var executorService: ExecutorService
     override fun start(onDone: (uri: String) -> Unit) {
         if (!::executorService.isInitialized || executorService.isShutdown) {

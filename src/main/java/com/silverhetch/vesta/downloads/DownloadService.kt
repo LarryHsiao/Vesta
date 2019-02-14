@@ -3,7 +3,7 @@ package com.silverhetch.vesta.downloads
 /**
  * Download uris by uri.
  */
-interface DownloadExecution {
+interface DownloadService {
     /**
      * Initialize threading and related resources
      */

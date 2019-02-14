@@ -1,24 +1,26 @@
 package com.silverhetch.vesta
 
-import com.silverhetch.vesta.arch.database.Database
 import com.silverhetch.vesta.database.H2DB
-import com.silverhetch.vesta.tag.DBTags
-import com.silverhetch.vesta.tag.Tags
-import com.silverhetch.vesta.target.DBTargets
-import com.silverhetch.vesta.target.Targets
+import java.io.File
 import java.sql.Connection
 
-// @todo #2 Tag-Target mapping table
-class VestaImpl : Vesta {
+/**
+ * Implementation of [Vesta].
+ */
+class VestaImpl(private val root: File) : Vesta {
     private val dbConnection: Connection by lazy {
         H2DB(System.getProperty("user.home")).connection()
     }
 
-    override fun target(): Targets {
-        return DBTargets(dbConnection)
+    override fun root(): File {
+        return root
     }
 
-    override fun tag(): Tags {
-        return DBTags(dbConnection)
+    override fun dbConnection(): Connection {
+        return dbConnection
+    }
+
+    override fun shutdown() {
+        dbConnection.close()
     }
 }

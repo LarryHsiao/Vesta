@@ -10,7 +10,7 @@ import java.nio.file.Paths
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit.*
 
-class DownloadExecutionImplTest {
+class DownloadServiceImplTest {
     @Test
     fun downloadTest() {
         val downloads = DBDownloads(
@@ -25,7 +25,7 @@ class DownloadExecutionImplTest {
         val targetDir = Files.createTempDirectory("downloadExecutionImplTest")
             .toFile()
             .apply { deleteOnExit() }
-        DownloadExecutionImpl(downloads, targetDir).start { doneUri ->
+        DownloadServiceImpl(downloads, targetDir).start { doneUri ->
             Assert.assertTrue(File(targetDir, Paths.get(doneUri).fileName.toString()).exists())
             countDownLatch.countDown()
         }
