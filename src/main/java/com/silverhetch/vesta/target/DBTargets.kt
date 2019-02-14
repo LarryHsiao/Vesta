@@ -6,8 +6,7 @@ import java.sql.Connection
 /**
  * Database implementation of Targets.
  *
- * @todo replace uri wiht 'object name', do not apply subdirectory in Vesta!
- *  use only single layer in file system.
+ * @todo replace uri wiht 'object name', do not apply subdirectory in Vesta! use only single layer in file system.
  */
 class DBTargets(
     private val connection: Connection
