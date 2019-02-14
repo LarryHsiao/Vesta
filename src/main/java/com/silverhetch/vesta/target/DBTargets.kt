@@ -5,8 +5,13 @@ import java.sql.Connection
 
 /**
  * Database implementation of Targets.
+ *
+ * @todo replace uri wiht 'object name', do not apply subdirectory in Vesta!
+ *  use only single layer in file system.
  */
-class DBTargets(private val connection: Connection) : Targets {
+class DBTargets(
+    private val connection: Connection
+) : Targets {
     override fun init() {
         connection.createStatement().execute("""
             create table if not exists targets
