@@ -88,6 +88,7 @@ class VestaApplication : Application() {
             if (content.startsWith("http")) {
                 downloads.new(URI(content))
                 DownloadServiceImpl(downloads, vesta.root()).start {
+                    // @todo #8 Handles uri duplicate
                     targets.add(URI(content))
                 }
             } else {
