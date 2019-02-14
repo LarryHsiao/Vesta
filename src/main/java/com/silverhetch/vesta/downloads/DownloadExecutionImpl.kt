@@ -19,15 +19,16 @@ class DownloadExecutionImpl(private val downloads: Downloads,
         if (!::executorService.isInitialized || executorService.isShutdown) {
             executorService = Executors.newFixedThreadPool(4)
         }
-        downloads.all().forEach { uri: String, downlaod: Download ->
+        downloads.all().forEach { uri: String, download: Download ->
             executorService.submit {
                 FileOutputStream(
                     File(targetDir, Paths.get(uri).fileName.toString())
                 ).channel.transferFrom(
-                    Channels.newChannel(downlaod.uri().toURL().openStream()),
+                    Channels.newChannel(download.uri().toURL().openStream()),
                     0,
                     Long.MAX_VALUE
                 )
+                download.delete()
                 onDone(uri)
             }
         }
