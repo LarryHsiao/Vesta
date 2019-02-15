@@ -5,6 +5,7 @@ import com.silverhetch.vesta.tag.DBTags
 import com.silverhetch.vesta.target.db.DBTargets
 import org.junit.Assert.*
 import org.junit.Test
+import java.io.File
 import java.net.URI
 import java.nio.file.Files
 
@@ -14,13 +15,14 @@ class DBAttachedTagsTest {
         val dbConn = H2DB(
             Files.createTempDirectory("temp").toFile().absolutePath
         ).connection()
+        val tempFile = File.createTempFile("temp", "target")
         DBTags(dbConn).init()
         DBTargets(dbConn).apply {
             init()
-            add(URI("http://phantom.uri"))
+            add(tempFile)
             assertEquals(
                 0,
-                DBAttachedTags(dbConn, all()[0]).let {
+                DBAttachedTags(dbConn, all().getValue(tempFile.name)).let {
                     it.init()
                     it.all().size
                 }
@@ -34,14 +36,15 @@ class DBAttachedTagsTest {
         val dbConn = H2DB(
             Files.createTempDirectory("temp").toFile().absolutePath
         ).connection()
+        val tempFile = File.createTempFile("temp", "target")
         DBTags(dbConn).apply {
             init()
             add("TagName")
             val tag = all().getValue("TagName")
             DBTargets(dbConn).apply {
                 init()
-                add(URI("http://phantom.uri"))
-                DBAttachedTags(dbConn, all()[0]).apply {
+                add(tempFile)
+                DBAttachedTags(dbConn, all().getValue(tempFile.name)).apply {
                     init()
                     add(tag)
                     assertEquals(1, all().size)
