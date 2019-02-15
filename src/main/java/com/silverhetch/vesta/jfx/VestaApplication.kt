@@ -85,12 +85,11 @@ class VestaApplication : Application() {
             BeautyLog().fetch().info("Content received: $content")
             val targets: Targets = VestaTargets(vesta).apply { init() }
             val downloads: Downloads = DBDownloads(vesta.dbConnection()).apply { init() }
-            if (content.startsWith("http")) {
-                downloads.new(URI(content))
-                DownloadServiceImpl(downloads, vesta.downloadRoot()).start { downloaded: File ->
-                    targets.add(downloaded)
-                }
-            }
+            downloads.new(URI(content))
+            DownloadServiceImpl(
+                downloads,
+                vesta.downloadRoot()
+            ).start { downloaded: File -> targets.add(downloaded) }
         } catch (e: Exception) {
             ExceptionDialog(e).fetch()
         }
