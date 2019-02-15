@@ -1,6 +1,7 @@
 package com.silverhetch.vesta
 
 import com.silverhetch.vesta.database.H2DB
+import com.silverhetch.vesta.target.Targets
 import java.io.File
 import java.sql.Connection
 
@@ -14,6 +15,14 @@ class VestaImpl(private val root: File) : Vesta {
 
     override fun root(): File {
         return root
+    }
+
+    override fun downloadRoot(): File {
+        return File(root, "download").apply { mkdirs() }
+    }
+
+    override fun targetRoot(): File {
+        return File(root, "targets").apply { mkdirs() }
     }
 
     override fun dbConnection(): Connection {

@@ -1,9 +1,9 @@
 package com.silverhetch.vesta.target
 
 import com.silverhetch.vesta.database.H2DB
+import com.silverhetch.vesta.target.db.DBTargets
 import org.junit.Assert.*
 import org.junit.Test
-import java.io.File
 import java.net.URI
 import java.nio.file.Files
 

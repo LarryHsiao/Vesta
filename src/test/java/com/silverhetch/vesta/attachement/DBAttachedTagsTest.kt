@@ -1,9 +1,8 @@
 package com.silverhetch.vesta.attachement
 
 import com.silverhetch.vesta.database.H2DB
-import com.silverhetch.vesta.tag.DBTag
 import com.silverhetch.vesta.tag.DBTags
-import com.silverhetch.vesta.target.DBTargets
+import com.silverhetch.vesta.target.db.DBTargets
 import org.junit.Assert.*
 import org.junit.Test
 import java.net.URI

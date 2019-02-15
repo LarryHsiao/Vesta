@@ -7,8 +7,9 @@ import com.silverhetch.vesta.downloads.DBDownloads
 import com.silverhetch.vesta.downloads.DownloadServiceImpl
 import com.silverhetch.vesta.downloads.Downloads
 import com.silverhetch.vesta.jfx.util.ExceptionDialog
-import com.silverhetch.vesta.target.DBTargets
+import com.silverhetch.vesta.target.db.DBTargets
 import com.silverhetch.vesta.target.Targets
+import com.silverhetch.vesta.target.VestaTargets
 import javafx.application.Application
 import javafx.scene.Scene
 import javafx.scene.input.*
@@ -20,7 +21,6 @@ import javafx.scene.paint.Paint
 import javafx.stage.Stage
 import java.io.File
 import java.net.URI
-import java.nio.file.Files
 
 /**
  * Entry point of Vesta.
@@ -83,16 +83,13 @@ class VestaApplication : Application() {
     private fun inputContent(content: String) {
         try {
             BeautyLog().fetch().info("Content received: $content")
-            val targets: Targets = DBTargets(vesta.dbConnection()).apply { init() }
+            val targets: Targets = VestaTargets(vesta).apply { init() }
             val downloads: Downloads = DBDownloads(vesta.dbConnection()).apply { init() }
             if (content.startsWith("http")) {
                 downloads.new(URI(content))
-                DownloadServiceImpl(downloads, vesta.root()).start {
-                    // @todo #8 Handles uri duplicate
-                    targets.add(URI(content))
+                DownloadServiceImpl(downloads, vesta.downloadRoot()).start { downloaded: File ->
+                    targets.add(downloaded)
                 }
-            } else {
-                targets.add(URI(content))
             }
         } catch (e: Exception) {
             ExceptionDialog(e).fetch()
