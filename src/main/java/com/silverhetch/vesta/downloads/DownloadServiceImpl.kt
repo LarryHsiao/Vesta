@@ -16,21 +16,22 @@ import java.util.concurrent.Executors
 class DownloadServiceImpl(private val downloads: Downloads,
                           private val targetDir: File) : DownloadService {
     private lateinit var executorService: ExecutorService
-    override fun start(onDone: (uri: String) -> Unit) {
+    override fun start(onDone: (uri: File) -> Unit) {
         if (!::executorService.isInitialized || executorService.isShutdown) {
             executorService = Executors.newFixedThreadPool(4)
         }
         downloads.all().forEach { uri: String, download: Download ->
             executorService.submit {
+                val downloadedFile = File(targetDir, Paths.get(uri).fileName.toString())
                 FileOutputStream(
-                    File(targetDir, Paths.get(uri).fileName.toString())
+                    downloadedFile
                 ).channel.transferFrom(
                     Channels.newChannel(download.uri().toURL().openStream()),
                     0,
                     Long.MAX_VALUE
                 )
                 download.delete()
-                onDone(uri)
+                onDone(downloadedFile)
             }
         }
     }

@@ -1,5 +1,6 @@
-package com.silverhetch.vesta.target
+package com.silverhetch.vesta.target.db
 
+import com.silverhetch.vesta.target.Target
 import java.net.URI
 import java.sql.Connection
 

@@ -26,7 +26,7 @@ class DownloadServiceImplTest {
             .toFile()
             .apply { deleteOnExit() }
         DownloadServiceImpl(downloads, targetDir).start { doneUri ->
-            Assert.assertTrue(File(targetDir, Paths.get(doneUri).fileName.toString()).exists())
+            Assert.assertTrue(doneUri.exists())
             countDownLatch.countDown()
         }
         countDownLatch.await(10000, MILLISECONDS)

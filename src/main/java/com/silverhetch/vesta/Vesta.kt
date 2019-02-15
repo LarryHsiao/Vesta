@@ -12,9 +12,19 @@ import java.sql.Connection
  */
 interface Vesta {
     /**
-     * Root file jdk object
+     * Root directory for Vesta
      */
     fun root(): File
+
+    /**
+     * Root file to store targets
+     */
+    fun targetRoot(): File
+
+    /**
+     * The downloaded root file
+     */
+    fun downloadRoot(): File
 
     /**
      * The database connection this application use.

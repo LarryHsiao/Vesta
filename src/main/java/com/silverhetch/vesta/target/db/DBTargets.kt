@@ -1,13 +1,12 @@
-package com.silverhetch.vesta.target
+package com.silverhetch.vesta.target.db
 
-import java.net.URI
+import com.silverhetch.vesta.target.Target
+import com.silverhetch.vesta.target.Targets
+import java.io.File
 import java.sql.Connection
 
 /**
  * Database implementation of Targets.
- *
- * @todo replace uri wiht 'object name', do not apply subdirectory in Vesta!
- *  use only single layer in file system.
  */
 class DBTargets(
     private val connection: Connection
@@ -17,31 +16,32 @@ class DBTargets(
             create table if not exists targets
             (
               id integer primary key auto_increment,
-              uri char unique
+              name char unique
             );"""
         )
     }
 
-    override fun add(uri: URI) {
-        connection.prepareStatement("""insert into targets(uri) values (?);""").use { statement ->
-            statement.setString(1, uri.toString())
+    override fun add(newFile: File) {
+        connection.prepareStatement("""insert into targets(name) values (?);""").use { statement ->
+            statement.setString(1, newFile.name)
             statement.execute()
         }
     }
 
-    override fun all(): Array<Target> {
+    override fun all(): Map<String, Target> {
         connection.createStatement().use { statement ->
-            val targets = ArrayList<Target>()
+            val targets = HashMap<String, Target>()
             statement.executeQuery("""select * from targets;""").use { resultSet ->
                 while (resultSet.next()) {
-                    targets.add(DBTarget(
+                    val name = resultSet.getString("name")
+                    targets[name] = DBTarget(
                         connection,
                         resultSet.getLong("id"),
-                        resultSet.getString("uri")
-                    ))
+                        name
+                    )
                 }
             }
-            return targets.toTypedArray()
+            return targets
         }
     }
 }

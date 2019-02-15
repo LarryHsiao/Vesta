@@ -1,10 +1,10 @@
 package com.silverhetch.vesta.target
 
-import java.net.URI
+import java.io.File
 
 
 interface Targets {
     fun init()
-    fun add(uri: URI)
-    fun all(): Array<Target>
+    fun add(newFile: File)
+    fun all(): Map<String, Target>
 }
