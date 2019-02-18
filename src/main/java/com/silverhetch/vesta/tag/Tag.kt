@@ -9,4 +9,9 @@ interface Tag {
      * The name of this tag
      */
     fun name(): String
+
+    /**
+     * Delete this tag.
+     */
+    fun delete()
 }

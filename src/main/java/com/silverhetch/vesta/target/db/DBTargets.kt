@@ -30,8 +30,8 @@ class DBTargets(
 
     override fun all(): Map<String, Target> {
         connection.createStatement().use { statement ->
-            val targets = HashMap<String, Target>()
-            statement.executeQuery("""select * from targets;""").use { resultSet ->
+            val targets = LinkedHashMap<String, Target>()
+            statement.executeQuery("""select * from targets order by name asc;""").use { resultSet ->
                 while (resultSet.next()) {
                     val name = resultSet.getString("name")
                     targets[name] = DBTarget(
