@@ -24,8 +24,8 @@ class DBTags(private val connection: Connection) : Tags {
 
     override fun all(): Map<String, Tag> {
         connection.createStatement().use { statement ->
-            val result = HashMap<String, Tag>()
-            statement.executeQuery("""select * from tags""").use { resultSet ->
+            val result = LinkedHashMap<String, Tag>()
+            statement.executeQuery("""select * from tags order by name asc""").use { resultSet ->
                 while (resultSet.next()) {
                     val name = resultSet.getString("name")
                     result[name] = DBTag(

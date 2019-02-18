@@ -17,4 +17,11 @@ class DBTag(
     override fun id(): Long {
         return id
     }
+
+    override fun delete() {
+        connection.prepareStatement("""delete from tags where id=?""").use {
+            it.setLong(1, id)
+            it.execute()
+        }
+    }
 }
