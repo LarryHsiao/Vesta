@@ -6,7 +6,7 @@
 <?import javafx.scene.layout.HBox?><?import javafx.scene.control.TextField?><?import javafx.scene.control.Button?>
 <VBox xmlns="http://javafx.com/javafx/8.0.172-ea"
     xmlns:fx="http://javafx.com/fxml/1"
-    fx:controller="com.silverhetch.vesta.jfx.TagManagementView">
+    fx:controller="com.silverhetch.vesta.jfx.tag.TagManagementView">
     <HBox>
         <TextField fx:id="newTagField" />
         <Button fx:id="newTagFieldButton"

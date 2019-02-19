@@ -4,5 +4,7 @@
 
 <ListView xmlns="http://javafx.com/javafx"
     xmlns:fx="http://javafx.com/fxml"
+    fx:id="listView"
+    fx:controller="com.silverhetch.vesta.jfx.target.TargetManagementView"
     prefHeight="400.0"
-    prefWidth="600.0"/>
+    prefWidth="600.0" />

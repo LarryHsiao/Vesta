@@ -6,16 +6,21 @@ import com.silverhetch.vesta.VestaImpl
 import com.silverhetch.vesta.downloads.DBDownloads
 import com.silverhetch.vesta.downloads.DownloadServiceImpl
 import com.silverhetch.vesta.downloads.Downloads
+import com.silverhetch.vesta.jfx.tag.TagManagementView
+import com.silverhetch.vesta.jfx.target.TargetManagementView
 import com.silverhetch.vesta.jfx.util.ExceptionDialog
 import com.silverhetch.vesta.tag.DBTags
 import com.silverhetch.vesta.target.Targets
 import com.silverhetch.vesta.target.VestaTargets
 import javafx.application.Application
 import javafx.fxml.FXMLLoader
+import javafx.scene.Parent
 import javafx.scene.Scene
-import javafx.scene.input.*
+import javafx.scene.input.Clipboard
 import javafx.scene.input.KeyCode.V
+import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination.CONTROL_DOWN
+import javafx.scene.input.TransferMode
 import javafx.scene.layout.Background
 import javafx.scene.layout.BackgroundFill
 import javafx.scene.layout.Pane
@@ -24,7 +29,6 @@ import javafx.scene.paint.Paint
 import javafx.stage.Stage
 import java.io.File
 import java.net.URI
-import javafx.scene.Parent
 
 /**
  * Entry point of Vesta.
@@ -57,12 +61,12 @@ class VestaApplication : Application() {
         tagManagementStage.show()
 
         val targetManagementStage = Stage()
+        val targetLoader = FXMLLoader(javaClass.getResource("/TargetManagement.fxml"))
+        val targetParent = targetLoader.load<Any>() as Parent
+        val targetController = targetLoader.getController<TargetManagementView>()
+        targetController.loadTargets(VestaTargets(vesta).apply { init() })
         targetManagementStage.title = "Vesta (Target management)"
-        targetManagementStage.scene = Scene(
-            FXMLLoader.load(
-                javaClass.getResource("/TargetManagement.fxml")
-            ), 640.0, 480.0
-        )
+        targetManagementStage.scene = Scene(targetParent)
         targetManagementStage.show()
     }
 

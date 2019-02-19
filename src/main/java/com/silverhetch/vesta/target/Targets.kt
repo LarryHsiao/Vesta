@@ -7,4 +7,5 @@ interface Targets {
     fun init()
     fun add(newFile: File)
     fun all(): Map<String, Target>
+    fun byName(name: String): Target
 }

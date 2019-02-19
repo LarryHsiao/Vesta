@@ -1,16 +1,14 @@
 package com.silverhetch.vesta.target
 
-import java.net.URI
-
 /**
  * Represent a real world object.
  */
 interface Target {
     fun id(): Long
     /**
-     * The uri for the object
+     * The target name
      */
-    fun uri(): URI
+    fun name(): String
 
     /**
      * delete this object.

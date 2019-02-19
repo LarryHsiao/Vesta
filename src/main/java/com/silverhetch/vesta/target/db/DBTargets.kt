@@ -4,6 +4,7 @@ import com.silverhetch.vesta.target.Target
 import com.silverhetch.vesta.target.Targets
 import java.io.File
 import java.sql.Connection
+import java.sql.ResultSet
 
 /**
  * Database implementation of Targets.
@@ -28,20 +29,38 @@ class DBTargets(
         }
     }
 
+    override fun byName(name: String): Target {
+        connection.prepareStatement("""select * from targets where NAME like ?;""").use { statement ->
+            statement.setString(1, name)
+            statement.executeQuery().use { resultSet ->
+                resultSet.next()
+                return toTarget(resultSet)
+            }
+        }
+    }
+
     override fun all(): Map<String, Target> {
         connection.createStatement().use { statement ->
             val targets = LinkedHashMap<String, Target>()
             statement.executeQuery("""select * from targets order by name asc;""").use { resultSet ->
                 while (resultSet.next()) {
-                    val name = resultSet.getString("name")
-                    targets[name] = DBTarget(
-                        connection,
-                        resultSet.getLong("id"),
-                        name
-                    )
+                    toResult(targets, resultSet)
                 }
             }
             return targets
         }
+    }
+
+    private fun toResult(map: LinkedHashMap<String, Target>, resultSet: ResultSet) {
+        val name = resultSet.getString("name")
+        map[name] = toTarget(resultSet)
+    }
+
+    private fun toTarget(resultSet: ResultSet): Target {
+        return DBTarget(
+            connection,
+            resultSet.getLong("id"),
+            resultSet.getString("name")
+        )
     }
 }

@@ -18,10 +18,23 @@ class VestaTargets(private val vesta: Vesta) : Targets {
         db.add(newFile)
     }
 
+    override fun byName(name: String): Target {
+        return VestaTarget(
+            fileSystem.byName(name),
+            db.byName(name)
+        )
+    }
+
     override fun all(): Map<String, Target> {
         /**
          * @todo #file-1 handles file system changed
          */
-        return db.all()
+        return db.all().let { dbTargets ->
+            val result = LinkedHashMap<String, Target>()
+            dbTargets.forEach { dbEntry ->
+                result[dbEntry.key] = VestaTarget(fileSystem.byName(dbEntry.key), dbEntry.value)
+            }
+            result
+        }
     }
 }

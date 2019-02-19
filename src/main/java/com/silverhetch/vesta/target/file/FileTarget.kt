@@ -12,8 +12,8 @@ class FileTarget(private val file: File) : Target {
         return file.hashCode().toLong()
     }
 
-    override fun uri(): URI {
-        return file.toURI()
+    override fun name(): String {
+        return file.name
     }
 
     override fun delete() {
