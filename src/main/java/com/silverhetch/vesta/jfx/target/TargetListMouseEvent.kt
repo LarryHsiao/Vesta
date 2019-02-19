@@ -14,7 +14,9 @@ import javafx.scene.input.MouseEvent
 /**
  * Handling mouse event on tag list.
  */
-class TargetListMouseEvent(private val listView: ListView<Target>) : EventHandler<MouseEvent> {
+class TargetListMouseEvent(
+    private val listView: ListView<Target>
+) : EventHandler<MouseEvent> {
     override fun handle(event: MouseEvent?) {
         if (event?.button == SECONDARY) {
             listView.selectionModel.selectedItem?.also { selected ->

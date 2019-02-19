@@ -13,6 +13,7 @@ import com.silverhetch.vesta.tag.DBTags
 import com.silverhetch.vesta.target.Targets
 import com.silverhetch.vesta.target.VestaTargets
 import javafx.application.Application
+import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
@@ -34,6 +35,9 @@ import java.net.URI
  * Entry point of Vesta.
  */
 class VestaApplication : Application() {
+    private lateinit var tagController: TagManagementView
+    private lateinit var targetController: TargetManagementView
+
     private val vesta: Vesta = VestaImpl(
         File(
             System.getProperty("user.home") + File.separator + "abc"
@@ -52,8 +56,8 @@ class VestaApplication : Application() {
         val tagManagementStage = Stage()
         val loader = FXMLLoader(javaClass.getResource("/TagManagement.fxml"))
         val tagParent = loader.load<Any>() as Parent
-        val controller = loader.getController<TagManagementView>()
-        controller.loadData(DBTags(vesta.dbConnection()).apply {
+        tagController = loader.getController<TagManagementView>()
+        tagController.loadData(DBTags(vesta.dbConnection()).apply {
             init()
         })
         tagManagementStage.title = "Vesta (Tag management)"
@@ -63,8 +67,8 @@ class VestaApplication : Application() {
         val targetManagementStage = Stage()
         val targetLoader = FXMLLoader(javaClass.getResource("/TargetManagement.fxml"))
         val targetParent = targetLoader.load<Any>() as Parent
-        val targetController = targetLoader.getController<TargetManagementView>()
-        targetController.loadTargets(VestaTargets(vesta).apply { init() })
+        targetController = targetLoader.getController<TargetManagementView>()
+        targetController.loadTargets(vesta, VestaTargets(vesta).apply { init() })
         targetManagementStage.title = "Vesta (Target management)"
         targetManagementStage.scene = Scene(targetParent)
         targetManagementStage.show()
@@ -114,7 +118,12 @@ class VestaApplication : Application() {
             DownloadServiceImpl(
                 downloads,
                 vesta.downloadRoot()
-            ).start { downloaded: File -> targets.add(downloaded) }
+            ).start { downloaded: File ->
+                targets.add(downloaded)
+                Platform.runLater {
+                    targetController.loadTargets(vesta, targets)
+                }
+            }
         } catch (e: Exception) {
             ExceptionDialog(e).fetch()
         }

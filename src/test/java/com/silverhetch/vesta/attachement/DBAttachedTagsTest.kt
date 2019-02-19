@@ -22,7 +22,7 @@ class DBAttachedTagsTest {
             add(tempFile)
             assertEquals(
                 0,
-                DBAttachedTags(dbConn, all().getValue(tempFile.name)).let {
+                DBAttachedTags(dbConn, all().getValue(tempFile.name).id()).let {
                     it.init()
                     it.all().size
                 }
@@ -44,7 +44,7 @@ class DBAttachedTagsTest {
             DBTargets(dbConn).apply {
                 init()
                 add(tempFile)
-                DBAttachedTags(dbConn, all().getValue(tempFile.name)).apply {
+                DBAttachedTags(dbConn, all().getValue(tempFile.name).id()).apply {
                     init()
                     add(tag)
                     assertEquals(1, all().size)
