@@ -18,6 +18,10 @@ class FileTargets(private val root: File) : Targets {
         }
     }
 
+    override fun byName(name: String): Target {
+        return FileTarget(File(root, name))
+    }
+
     override fun all(): Map<String, Target> {
         val result = HashMap<String, Target>()
         root.listFiles().forEach {

@@ -45,7 +45,7 @@ class DBTargetTest {
             init()
             add(tempFile)
             all().getValue(tempFile.name).delete()
-            assertEquals(1, all().size)
+            assertEquals(0, all().size)
         }
     }
 }
