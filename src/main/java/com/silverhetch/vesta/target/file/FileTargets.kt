@@ -22,6 +22,16 @@ class FileTargets(private val root: File) : Targets {
         return FileTarget(File(root, name))
     }
 
+    override fun byKeyword(keyword: String): Map<String, Target> {
+        val result = HashMap<String, Target>()
+        root.listFiles().forEach {
+            if (it.name.toLowerCase().contains(keyword.toLowerCase())){
+                result[it.name] = FileTarget(it)
+            }
+        }
+        return result
+    }
+
     override fun all(): Map<String, Target> {
         val result = HashMap<String, Target>()
         root.listFiles().forEach {

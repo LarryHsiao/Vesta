@@ -25,16 +25,22 @@ class VestaTargets(private val vesta: Vesta) : Targets {
         )
     }
 
+    override fun byKeyword(keyword: String): Map<String, Target> {
+        return outputMap(db.byKeyword(keyword))
+    }
+
     override fun all(): Map<String, Target> {
         /**
          * @todo #file-1 handles file system changed
          */
-        return db.all().let { dbTargets ->
-            val result = LinkedHashMap<String, Target>()
-            dbTargets.forEach { dbEntry ->
-                result[dbEntry.key] = VestaTarget(fileSystem.byName(dbEntry.key), dbEntry.value)
-            }
-            result
+        return outputMap(db.all())
+    }
+
+    private fun outputMap(dbTargets: Map<String, Target>): Map<String, Target> {
+        val result = LinkedHashMap<String, Target>()
+        dbTargets.forEach { dbEntry ->
+            result[dbEntry.key] = VestaTarget(fileSystem.byName(dbEntry.key), dbEntry.value)
         }
+        return result
     }
 }

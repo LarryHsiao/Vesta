@@ -22,10 +22,7 @@ import javafx.scene.input.KeyCode.V
 import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination.CONTROL_DOWN
 import javafx.scene.input.TransferMode
-import javafx.scene.layout.Background
-import javafx.scene.layout.BackgroundFill
-import javafx.scene.layout.Pane
-import javafx.scene.layout.StackPane
+import javafx.scene.layout.*
 import javafx.scene.paint.Paint
 import javafx.stage.Stage
 import java.io.File
@@ -52,30 +49,10 @@ class VestaApplication : Application() {
         stage.scene = scene
         stage.title = "Vesta (main)"
         stage.show()
-
-        val tagManagementStage = Stage()
-        val loader = FXMLLoader(javaClass.getResource("/TagManagement.fxml"))
-        val tagParent = loader.load<Any>() as Parent
-        tagController = loader.getController<TagManagementView>()
-        tagController.loadData(DBTags(vesta.dbConnection()).apply {
-            init()
-        })
-        tagManagementStage.title = "Vesta (Tag management)"
-        tagManagementStage.scene = Scene(tagParent)
-        tagManagementStage.show()
-
-        val targetManagementStage = Stage()
-        val targetLoader = FXMLLoader(javaClass.getResource("/TargetManagement.fxml"))
-        val targetParent = targetLoader.load<Any>() as Parent
-        targetController = targetLoader.getController<TargetManagementView>()
-        targetController.loadTargets(vesta, VestaTargets(vesta).apply { init() })
-        targetManagementStage.title = "Vesta (Target management)"
-        targetManagementStage.scene = Scene(targetParent)
-        targetManagementStage.show()
     }
 
     private fun rootView(): Pane {
-        val root = StackPane()
+        val root = HBox()
         root.setOnDragOver { dragEvent ->
             if (dragEvent.dragboard.hasString()
                 || dragEvent.dragboard.hasFiles()
@@ -89,8 +66,27 @@ class VestaApplication : Application() {
             dragEvent.isDropCompleted = true
             dragEvent.consume()
         }
-        root.background = Background(BackgroundFill(Paint.valueOf("#000"), null, null))
+        tagManagementView(root)
+        targetManagementView(root)
         return root
+    }
+
+    private fun tagManagementView(root:Pane){
+        val loader = FXMLLoader(javaClass.getResource("/TagManagement.fxml"))
+        val tagParent = loader.load<Any>() as Parent
+        tagController = loader.getController<TagManagementView>()
+        tagController.loadData(DBTags(vesta.dbConnection()).apply {
+            init()
+        })
+        root.children.add(tagParent)
+    }
+
+    private fun targetManagementView(root:Pane){
+        val targetLoader = FXMLLoader(javaClass.getResource("/TargetManagement.fxml"))
+        val targetParent = targetLoader.load<Any>() as Parent
+        targetController = targetLoader.getController<TargetManagementView>()
+        targetController.loadTargets(vesta, VestaTargets(vesta).apply { init() })
+        root.children.add(targetParent)
     }
 
     private fun inputContent(clipboard: Clipboard) {

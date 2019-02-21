@@ -8,4 +8,5 @@ interface Targets {
     fun add(newFile: File)
     fun all(): Map<String, Target>
     fun byName(name: String): Target
+    fun byKeyword(keyword: String): Map<String, Target>
 }
