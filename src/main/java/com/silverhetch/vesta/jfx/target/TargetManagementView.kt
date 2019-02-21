@@ -8,6 +8,7 @@ import com.silverhetch.vesta.target.Targets
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
+import javafx.scene.control.TextField
 import java.net.URL
 import java.util.*
 
@@ -15,6 +16,7 @@ import java.util.*
  * Target management
  */
 class TargetManagementView : Initializable {
+    @FXML private lateinit var searchField: TextField
     @FXML private lateinit var listView: ListView<Target>
     @FXML private lateinit var targetInfoController: TargetInfoView
     private lateinit var vesta: Vesta
@@ -32,6 +34,10 @@ class TargetManagementView : Initializable {
             )
         }
 
+        searchField.textProperty().addListener { _, _, newValue ->
+            loadTargets(targets.byKeyword(newValue).values)
+        }
+
         /**
          * @todo #9 Handles event to attach tag
          */
@@ -40,11 +46,11 @@ class TargetManagementView : Initializable {
     fun loadTargets(vesta: Vesta, targets: Targets) {
         this.vesta = vesta
         this.targets = targets
-        loadTargets()
+        loadTargets(targets.all().values)
     }
 
-    private fun loadTargets() {
+    private fun loadTargets(values: Collection<Target>) {
         listView.items.clear()
-        listView.items.addAll(targets.all().values)
+        listView.items.addAll(values)
     }
 }

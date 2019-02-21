@@ -30,12 +30,25 @@ class DBTargets(
     }
 
     override fun byName(name: String): Target {
-        connection.prepareStatement("""select * from targets where NAME like ?;""").use { statement ->
+        connection.prepareStatement("""select * from targets where name=?;""").use { statement ->
             statement.setString(1, name)
             statement.executeQuery().use { resultSet ->
                 resultSet.next()
                 return toTarget(resultSet)
             }
+        }
+    }
+
+    override fun byKeyword(keyword: String): Map<String, Target> {
+        connection.prepareStatement("""select * from targets where name like ?;""").use { statement ->
+            statement.setString(1, "%$keyword%")
+            val targets = LinkedHashMap<String, Target>()
+            statement.executeQuery().use { resultSet ->
+                while (resultSet.next()) {
+                    toResult(targets, resultSet)
+                }
+            }
+            return targets
         }
     }
 
