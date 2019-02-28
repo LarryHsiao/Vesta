@@ -1,13 +1,12 @@
-package com.silverhetch.vesta.attachement
+package com.silverhetch.vesta.attached.tags
 
 import com.silverhetch.vesta.tag.Tag
-import com.silverhetch.vesta.target.Target
 import java.sql.Connection
 
 /**
  * Database implementation of attachment
  */
-class DBAttachment(private val connection: Connection, private val id: Long, private val tag: Tag) : Attachment {
+class DBAttachedTag(private val connection: Connection, private val id: Long, private val tag: Tag) : AttachedTag {
     override fun tag(): Tag {
         return tag
     }

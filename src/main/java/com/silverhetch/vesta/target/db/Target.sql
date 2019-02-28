@@ -1,5 +1,6 @@
 create table if not exists targets
 (
+  id integer auto_increment primary key,
   uri char unique
 );
 
