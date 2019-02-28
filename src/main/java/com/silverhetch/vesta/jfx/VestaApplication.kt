@@ -23,7 +23,6 @@ import javafx.scene.input.KeyCodeCombination
 import javafx.scene.input.KeyCombination.CONTROL_DOWN
 import javafx.scene.input.TransferMode
 import javafx.scene.layout.*
-import javafx.scene.paint.Paint
 import javafx.stage.Stage
 import java.io.File
 import java.net.URI

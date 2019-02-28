@@ -1,17 +1,17 @@
-package com.silverhetch.vesta.attachement
+package com.silverhetch.vesta.attached.tags
 
 import com.silverhetch.vesta.tag.Tag
 
-interface Attachments {
+interface AttachedTags {
     /**
      * Used for initialize when application fire up.
      */
     fun init()
 
     /**
-     * All the [Attachment] object
+     * All the [AttachedTag] object
      */
-    fun all(): Map<String, Attachment>
+    fun all(): Map<String, AttachedTag>
 
     /**
      * Attach new tag to this object

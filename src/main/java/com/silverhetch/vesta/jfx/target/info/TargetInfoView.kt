@@ -1,6 +1,6 @@
 package com.silverhetch.vesta.jfx.target.info
 
-import com.silverhetch.vesta.attachement.Attachments
+import com.silverhetch.vesta.attached.tags.AttachedTags
 import com.silverhetch.vesta.target.Target
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
@@ -18,10 +18,10 @@ class TargetInfoView : Initializable {
     override fun initialize(url: URL?, bundle: ResourceBundle?) {
     }
 
-    fun loadTarget(target: Target, attachments: Attachments) {
+    fun loadTarget(target: Target, attachedTags: AttachedTags) {
         this.target = target
         label.text = target.name() + " "
-        attachments.all().forEach {
+        attachedTags.all().forEach {
             label.text += it.value.tag().name() + " "
         }
     }

@@ -1,7 +1,7 @@
 package com.silverhetch.vesta.jfx.target
 
 import com.silverhetch.vesta.Vesta
-import com.silverhetch.vesta.attachement.DBAttachedTags
+import com.silverhetch.vesta.attached.tags.DBAttachedTags
 import com.silverhetch.vesta.jfx.target.info.TargetInfoView
 import com.silverhetch.vesta.target.Target
 import com.silverhetch.vesta.target.Targets

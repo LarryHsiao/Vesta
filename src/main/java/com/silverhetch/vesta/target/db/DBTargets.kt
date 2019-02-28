@@ -70,10 +70,7 @@ class DBTargets(
     }
 
     private fun toTarget(resultSet: ResultSet): Target {
-        return DBTarget(
-            connection,
-            resultSet.getLong("id"),
-            resultSet.getString("name")
-        )
+        return DBTargetResult(connection, resultSet).target()
     }
 }
+
