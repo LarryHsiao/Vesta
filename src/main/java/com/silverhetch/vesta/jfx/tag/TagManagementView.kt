@@ -40,6 +40,9 @@ class TagManagementView : Initializable {
         }
     }
 
+    /**
+     * Load the [Tags] for this view.
+     */
     fun loadData(tags: Tags) {
         this.tags = tags
         loadData()

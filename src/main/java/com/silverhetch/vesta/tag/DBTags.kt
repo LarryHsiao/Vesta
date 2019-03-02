@@ -1,6 +1,7 @@
 package com.silverhetch.vesta.tag
 
 import com.silverhetch.vesta.tag.uri.TagUri
+import java.lang.IllegalArgumentException
 import java.net.URI
 import java.sql.Connection
 import java.sql.ResultSet
@@ -27,7 +28,7 @@ class DBTags(private val connection: Connection) : Tags {
 
     override fun byUri(uri: TagUri): Tag {
         if (!uri.valid()) {
-            throw RuntimeException("Invalid TagUri")
+            throw IllegalArgumentException("Invalid TagUri")
         }
         connection.prepareStatement("""select * from tags where id=? limit 1""").use { statement ->
             statement.setLong(1, uri.id())

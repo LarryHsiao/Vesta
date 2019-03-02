@@ -18,6 +18,9 @@ class TargetInfoView : Initializable {
     override fun initialize(url: URL?, bundle: ResourceBundle?) {
     }
 
+    /**
+     * Load the info view by [Target] and [AttachedTags].
+     */
     fun loadTarget(target: Target, attachedTags: AttachedTags) {
         this.target = target
         label.text = target.name() + " "

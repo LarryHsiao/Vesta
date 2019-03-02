@@ -5,6 +5,9 @@ import com.silverhetch.vesta.tag.DBTag
 import com.silverhetch.vesta.tag.Tag
 import java.sql.Connection
 
+/**
+ * Database implementation of [AttachedTags].
+ */
 class DBAttachedTags(private val connection: Connection, private val targetId: Long) : AttachedTags {
     override fun init() {
         AttachedTableConn(connection).init()
