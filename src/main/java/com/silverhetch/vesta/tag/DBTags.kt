@@ -1,6 +1,9 @@
 package com.silverhetch.vesta.tag
 
+import com.silverhetch.vesta.tag.uri.TagUri
+import java.net.URI
 import java.sql.Connection
+import java.sql.ResultSet
 
 /**
  * Tags that stored in database.
@@ -19,6 +22,23 @@ class DBTags(private val connection: Connection) : Tags {
         connection.prepareStatement("""insert into tags(name) values ( ? );""").use {
             it.setString(1, name)
             it.execute()
+        }
+    }
+
+    override fun byUri(uri: TagUri): Tag {
+        if (!uri.valid()) {
+            throw RuntimeException("Invalid TagUri")
+        }
+        connection.prepareStatement("""select * from tags where id=? limit 1""").use { statement ->
+            statement.setLong(1, uri.id())
+            statement.executeQuery().use { result ->
+                result.next()
+                return DBTag(
+                    connection,
+                    result.getLong("id"),
+                    result.getString("name")
+                )
+            }
         }
     }
 

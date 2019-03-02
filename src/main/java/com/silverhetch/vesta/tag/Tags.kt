@@ -1,5 +1,7 @@
 package com.silverhetch.vesta.tag
 
+import com.silverhetch.vesta.tag.uri.TagUri
+
 /**
  * Object that builds [Tag] objects and create [Tag].
  */
@@ -12,10 +14,15 @@ interface Tags {
     /**
      * All the [Tag] object
      */
-    fun all(): Map<String,Tag>
+    fun all(): Map<String, Tag>
 
     /**
      * Add new [Tag]
      */
     fun add(name: String)
+
+    /**
+     * Tag by uri
+     */
+    fun byUri(uri: TagUri): Tag
 }

@@ -25,6 +25,7 @@ import javafx.scene.input.TransferMode
 import javafx.scene.layout.*
 import javafx.stage.Stage
 import java.io.File
+import java.lang.RuntimeException
 import java.net.URI
 
 /**
@@ -48,6 +49,10 @@ class VestaApplication : Application() {
         stage.scene = scene
         stage.title = "Vesta (main)"
         stage.show()
+
+        Thread.setDefaultUncaughtExceptionHandler { _, e ->
+            ExceptionDialog(RuntimeException(e)).fetch()
+        }
     }
 
     private fun rootView(): Pane {
@@ -70,7 +75,7 @@ class VestaApplication : Application() {
         return root
     }
 
-    private fun tagManagementView(root:Pane){
+    private fun tagManagementView(root: Pane) {
         val loader = FXMLLoader(javaClass.getResource("/TagManagement.fxml"))
         val tagParent = loader.load<Any>() as Parent
         tagController = loader.getController<TagManagementView>()
@@ -80,7 +85,7 @@ class VestaApplication : Application() {
         root.children.add(tagParent)
     }
 
-    private fun targetManagementView(root:Pane){
+    private fun targetManagementView(root: Pane) {
         val targetLoader = FXMLLoader(javaClass.getResource("/TargetManagement.fxml"))
         val targetParent = targetLoader.load<Any>() as Parent
         targetController = targetLoader.getController<TargetManagementView>()
