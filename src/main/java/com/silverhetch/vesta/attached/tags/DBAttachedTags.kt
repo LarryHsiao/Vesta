@@ -11,7 +11,7 @@ class DBAttachedTags(private val connection: Connection, private val targetId: L
     }
 
     override fun all(): Map<String, AttachedTag> {
-        connection.prepareStatement("""select * from tags left join attachments where target_id=?""").use { statement ->
+        connection.prepareStatement("""select * from attachments left join tags where target_id=? and tag_id=tags.id""").use { statement ->
             statement.setLong(1, targetId)
             val result = HashMap<String, AttachedTag>()
             statement.executeQuery().use { resultSet ->

@@ -34,5 +34,6 @@ dependencies {
     compile 'com.jfoenix:jfoenix:8.0.8'
     compile "org.jetbrains.kotlin:kotlin-stdlib-jdk8:$kotlin_version"
     compile "com.silverhetch:clotho:1.1.0"
+    compile "com.silverhetch:clotho-desktop:1.1.0"
     compile group: 'com.h2database', name: 'h2', version: '1.4.197'
 }
