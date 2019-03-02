@@ -12,6 +12,7 @@ import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
+import javafx.scene.input.DragEvent
 import javafx.scene.input.TransferMode.*
 import java.net.URI
 import java.net.URL
@@ -30,31 +31,8 @@ class TargetManagementView : Initializable {
         listView.setCellFactory {
             val cell = TargetListCell()
             cell.onDragEntered = ListDragging(cell, listView)
-
-            cell.setOnDragOver {
-                if (listView.selectionModel.selectedItems.size == 1
-                    && TagUriImpl(URI(it.dragboard.url)).valid()
-                ) {
-                    it.acceptTransferModes(LINK)
-                    it.consume()
-                }
-            }
-
-            cell.setOnDragDropped {
-                if (it.dragboard.url == null) {
-                    return@setOnDragDropped
-                }
-                val tagUri = TagUriImpl(URI(it.dragboard.url))
-                if (tagUri.valid()) {
-                    DBAttachedTags(
-                        vesta.dbConnection(),
-                        cell.item.id()
-                    ).add(DBTags(vesta.dbConnection()).byUri(tagUri))
-                    updateTargetInfo()
-                    it.isDropCompleted = true
-                    it.consume()
-                }
-            }
+            cell.setOnDragOver { onTagDraggedOver(it) }
+            cell.setOnDragDropped { onTagDropped(it, cell.item) }
             cell
         }
         listView.onMouseClicked = TargetListMouseEvent(listView)
@@ -66,6 +44,31 @@ class TargetManagementView : Initializable {
 
         searchField.textProperty().addListener { _, _, newValue ->
             loadTargets(targets.byKeyword(newValue).values)
+        }
+    }
+
+    private fun onTagDraggedOver(it: DragEvent) {
+        if (listView.selectionModel.selectedItems.size == 1
+            && TagUriImpl(URI(it.dragboard.url)).valid()
+        ) {
+            it.acceptTransferModes(LINK)
+            it.consume()
+        }
+    }
+
+    private fun onTagDropped(it: DragEvent, target: Target) {
+        if (it.dragboard.url == null) {
+            return
+        }
+        val tagUri = TagUriImpl(URI(it.dragboard.url))
+        if (tagUri.valid()) {
+            DBAttachedTags(
+                vesta.dbConnection(),
+                target.id()
+            ).add(DBTags(vesta.dbConnection()).byUri(tagUri))
+            updateTargetInfo()
+            it.isDropCompleted = true
+            it.consume()
         }
     }
 
