@@ -9,7 +9,13 @@ import org.junit.Test
 import java.io.File
 import java.nio.file.Files
 
+/**
+ * Unit test for DBAttachedTargeds
+ */
 class DBAttachedTargetsTest {
+    /**
+     * Empty table after first initialization
+     */
     @Test
     fun initial() {
         val dbConn = H2DB(
@@ -30,6 +36,9 @@ class DBAttachedTargetsTest {
         }
     }
 
+    /**
+     * Adding tag to target and check if it is in database.
+     */
     @Test
     fun add_byAddingTag() {
         val dbConn = H2DB(
@@ -56,6 +65,9 @@ class DBAttachedTargetsTest {
         }
     }
 
+    /**
+     * Adding target to tag and check if it is in database.
+     */
     @Test
     fun add_byAddingTarget() {
         val dbConn = H2DB(

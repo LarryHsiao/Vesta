@@ -6,7 +6,13 @@ import org.junit.Test
 import java.net.URI
 import java.nio.file.Files
 
+/**
+ * DBDownloads testing
+ */
 class DBDownloadsTest {
+    /**
+     * Empty database after first time initialization
+     */
     @Test
     fun initial() {
         DBDownloads(
@@ -17,6 +23,9 @@ class DBDownloadsTest {
         }
     }
 
+    /**
+     * Delete
+     */
     @Test
     fun delete() {
         DBDownloads(

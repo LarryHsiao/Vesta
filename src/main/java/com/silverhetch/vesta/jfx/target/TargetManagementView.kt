@@ -37,9 +37,7 @@ class TargetManagementView : Initializable {
         }
         listView.onMouseClicked = TargetListMouseEvent(listView)
         listView.selectionModel.selectedItemProperty().addListener { _, _, target: Target? ->
-            target?.let {
-                updateTargetInfo(target)
-            }
+            target?.let { updateTargetInfo(target) }
         }
 
         searchField.textProperty().addListener { _, _, newValue ->

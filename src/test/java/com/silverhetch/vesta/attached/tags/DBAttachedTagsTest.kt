@@ -8,7 +8,13 @@ import org.junit.Test
 import java.io.File
 import java.nio.file.Files
 
+/**
+ * Unit-test for DBAttachedTags
+ */
 class DBAttachedTagsTest {
+    /**
+     * check there is empty after first initialization
+     */
     @Test
     fun initialized() {
         val dbConn = H2DB(
@@ -30,6 +36,9 @@ class DBAttachedTagsTest {
     }
 
 
+    /**
+     * Adding function
+     */
     @Test
     fun add() {
         val dbConn = H2DB(

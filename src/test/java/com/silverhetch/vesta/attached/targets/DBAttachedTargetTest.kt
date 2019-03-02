@@ -9,7 +9,13 @@ import org.junit.Test
 import java.io.File
 import java.nio.file.Files
 
+/**
+ * Unit test
+ */
 class DBAttachedTargetTest{
+    /**
+     * Test remove function
+     */
     @Test
     fun remove() {
         val dbConn = H2DB(
