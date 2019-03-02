@@ -2,6 +2,9 @@ package com.silverhetch.vesta.attached.tags
 
 import com.silverhetch.vesta.tag.Tag
 
+/**
+ * Represent a object that have tags.
+ */
 interface AttachedTags {
     /**
      * Used for initialize when application fire up.

@@ -8,6 +8,9 @@ import javafx.application.Application
  */
 class Main {
     companion object {
+        /**
+         * Main function
+         */
         @JvmStatic
         fun main(args: Array<String>) {
             Application.launch(VestaApplication::class.java, *args)

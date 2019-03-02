@@ -3,6 +3,9 @@ package com.silverhetch.vesta.tag.uri
 import com.silverhetch.vesta.tag.Tag
 import java.net.URI
 
+/**
+ * The implementation of [TagUri]
+ */
 class TagUriImpl : TagUri {
     private val uri: URI
 

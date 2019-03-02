@@ -12,6 +12,9 @@ import java.nio.file.Files
  * Unit test for DBAttachedTag
  */
 class DBAttachedTagTest {
+    /**
+     * Remove
+     */
     @Test
     fun remove() {
         val dbConn = H2DB(

@@ -1,5 +1,8 @@
 package com.silverhetch.vesta.target
 
+/**
+ * Target object of vesta implementation.
+ */
 class VestaTarget(
     private val fileTarget: Target,
     dbTarget: Target

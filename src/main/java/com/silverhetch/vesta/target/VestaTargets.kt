@@ -5,6 +5,9 @@ import com.silverhetch.vesta.target.db.DBTargets
 import com.silverhetch.vesta.target.file.FileTargets
 import java.io.File
 
+/**
+ * Main implementation of Targets used in
+ */
 class VestaTargets(private val vesta: Vesta) : Targets {
     private val db = DBTargets(vesta.dbConnection())
     private val fileSystem = FileTargets(vesta.targetRoot())
