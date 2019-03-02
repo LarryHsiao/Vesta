@@ -1,5 +1,6 @@
 package com.silverhetch.vesta.jfx
 
+import com.silverhetch.clotho.desktop.ExceptionDialog
 import com.silverhetch.clotho.log.BeautyLog
 import com.silverhetch.vesta.Vesta
 import com.silverhetch.vesta.VestaImpl
@@ -8,7 +9,6 @@ import com.silverhetch.vesta.downloads.DownloadServiceImpl
 import com.silverhetch.vesta.downloads.Downloads
 import com.silverhetch.vesta.jfx.tag.TagManagementView
 import com.silverhetch.vesta.jfx.target.TargetManagementView
-import com.silverhetch.vesta.jfx.util.ExceptionDialog
 import com.silverhetch.vesta.tag.DBTags
 import com.silverhetch.vesta.target.Targets
 import com.silverhetch.vesta.target.VestaTargets

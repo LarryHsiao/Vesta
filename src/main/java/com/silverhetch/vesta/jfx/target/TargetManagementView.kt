@@ -1,6 +1,9 @@
 package com.silverhetch.vesta.jfx.target
 
+import com.silverhetch.clotho.desktop.ExceptionDialog
 import com.silverhetch.clotho.desktop.event.draging.ListDragging
+import com.silverhetch.clotho.desktop.exectable.CExecutable
+import com.silverhetch.clotho.desktop.exectable.FileExecutable
 import com.silverhetch.vesta.Vesta
 import com.silverhetch.vesta.attached.tags.DBAttachedTags
 import com.silverhetch.vesta.jfx.target.info.TargetInfoView
@@ -8,12 +11,15 @@ import com.silverhetch.vesta.tag.DBTags
 import com.silverhetch.vesta.tag.uri.TagUriImpl
 import com.silverhetch.vesta.target.Target
 import com.silverhetch.vesta.target.Targets
+import javafx.application.Platform
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.ListView
 import javafx.scene.control.TextField
 import javafx.scene.input.DragEvent
-import javafx.scene.input.TransferMode.*
+import javafx.scene.input.MouseButton
+import javafx.scene.input.TransferMode.LINK
+import java.io.File
 import java.net.URI
 import java.net.URL
 import java.util.*
@@ -33,6 +39,11 @@ class TargetManagementView : Initializable {
             cell.onDragEntered = ListDragging(cell, listView)
             cell.setOnDragOver { onTagDraggedOver(it) }
             cell.setOnDragDropped { onTagDropped(it, cell.item) }
+            cell.setOnMouseClicked {
+                if (it.clickCount == 2 && it.button == MouseButton.PRIMARY) {
+                    onTargetDoubleClicked(cell.item)
+                }
+            }
             cell
         }
         listView.onMouseClicked = TargetListMouseEvent(listView)
@@ -43,6 +54,18 @@ class TargetManagementView : Initializable {
         searchField.textProperty().addListener { _, _, newValue ->
             loadTargets(targets.byKeyword(newValue).values)
         }
+    }
+
+    private fun onTargetDoubleClicked(item: Target) {
+        FileExecutable(
+            File(vesta.targetRoot(), item.name()).toURI().toString()
+        ).launch(object : CExecutable.Callback {
+            override fun onFailed() {
+                Platform.runLater {
+                    ExceptionDialog(Exception("Launch failed")).fetch()
+                }
+            }
+        })
     }
 
     private fun onTagDraggedOver(it: DragEvent) {
