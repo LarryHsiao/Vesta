@@ -27,39 +27,38 @@ class TargetManagementView : Initializable {
     private lateinit var targets: Targets
     override fun initialize(url: URL?, bundle: ResourceBundle?) {
         listView.setCellFactory {
-            TargetListCell().apply {
+            val cell = TargetListCell()
+            cell.setOnDragEntered {
+                listView.selectionModel.clearSelection()
+                listView.selectionModel.select(cell.item)
+                it.consume()
+            }
 
-                setOnDragEntered {
-                    listView.selectionModel.clearSelection()
-                    listView.selectionModel.select(item)
+            cell.setOnDragOver {
+                if (listView.selectionModel.selectedItems.size == 1
+                    && TagUriImpl(URI(it.dragboard.url)).valid()
+                ) {
+                    it.acceptTransferModes(LINK)
                     it.consume()
                 }
+            }
 
-                setOnDragOver {
-                    if (listView.selectionModel.selectedItems.size == 1
-                        && TagUriImpl(URI(it.dragboard.url)).valid()
-                    ) {
-                        it.acceptTransferModes(LINK)
-                        it.consume()
-                    }
+            cell.setOnDragDropped {
+                if (it.dragboard.url == null) {
+                    return@setOnDragDropped
                 }
-
-                setOnDragDropped {
-                    if (it.dragboard.url == null) {
-                        return@setOnDragDropped
-                    }
-                    val tagUri = TagUriImpl(URI(it.dragboard.url))
-                    if (tagUri.valid()) {
-                        DBAttachedTags(
-                            vesta.dbConnection(),
-                            item.id()
-                        ).add(DBTags(vesta.dbConnection()).byUri(tagUri))
-                        updateTargetInfo()
-                        it.isDropCompleted = true
-                        it.consume()
-                    }
+                val tagUri = TagUriImpl(URI(it.dragboard.url))
+                if (tagUri.valid()) {
+                    DBAttachedTags(
+                        vesta.dbConnection(),
+                        cell.item.id()
+                    ).add(DBTags(vesta.dbConnection()).byUri(tagUri))
+                    updateTargetInfo()
+                    it.isDropCompleted = true
+                    it.consume()
                 }
             }
+            cell
         }
         listView.onMouseClicked = TargetListMouseEvent(listView)
         listView.selectionModel.selectedItemProperty().addListener { _, _, target: Target? ->
