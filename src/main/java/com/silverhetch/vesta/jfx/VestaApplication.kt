@@ -50,7 +50,7 @@ class VestaApplication : Application() {
         stage.title = "Vesta (main)"
         stage.show()
 
-        Thread.setDefaultUncaughtExceptionHandler { t, e ->
+        Thread.setDefaultUncaughtExceptionHandler { _, e ->
             ExceptionDialog(RuntimeException(e)).fetch()
         }
     }

@@ -1,5 +1,6 @@
 package com.silverhetch.vesta.jfx.target
 
+import com.silverhetch.clotho.desktop.event.draging.ListDragging
 import com.silverhetch.vesta.Vesta
 import com.silverhetch.vesta.attached.tags.DBAttachedTags
 import com.silverhetch.vesta.jfx.target.info.TargetInfoView
@@ -28,11 +29,7 @@ class TargetManagementView : Initializable {
     override fun initialize(url: URL?, bundle: ResourceBundle?) {
         listView.setCellFactory {
             val cell = TargetListCell()
-            cell.setOnDragEntered {
-                listView.selectionModel.clearSelection()
-                listView.selectionModel.select(cell.item)
-                it.consume()
-            }
+            cell.onDragEntered = ListDragging(cell, listView)
 
             cell.setOnDragOver {
                 if (listView.selectionModel.selectedItems.size == 1
