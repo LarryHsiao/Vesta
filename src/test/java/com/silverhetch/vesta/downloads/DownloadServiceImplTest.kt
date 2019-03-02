@@ -10,7 +10,13 @@ import java.nio.file.Paths
 import java.util.concurrent.CountDownLatch
 import java.util.concurrent.TimeUnit.*
 
+/**
+ * Test for [DownloadServiceImpl]
+ */
 class DownloadServiceImplTest {
+    /**
+     * Test the download function by downloading dummyimages
+     */
     @Test
     fun downloadTest() {
         val downloads = DBDownloads(
@@ -33,4 +39,8 @@ class DownloadServiceImplTest {
         Assert.assertEquals(0, countDownLatch.count)
         Assert.assertEquals(0, downloads.all().size)
     }
+
+    /**
+     * @todo #10 download failure tests
+     */
 }

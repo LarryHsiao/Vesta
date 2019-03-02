@@ -4,6 +4,9 @@ import com.silverhetch.vesta.target.Target
 import java.sql.Connection
 import java.sql.ResultSet
 
+/**
+ * Object for build [Target] from [ResultSet].
+ */
 class DBTargetResult(
     private val conn: Connection,
     private val resultSet: ResultSet
