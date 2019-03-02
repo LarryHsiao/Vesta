@@ -7,7 +7,13 @@ import org.junit.Test
 import java.net.URI
 import java.nio.file.Files
 
+/**
+ * Test [DBTags]
+ */
 class DBTagsTest {
+    /**
+     * Initialization testing
+     */
     @Test
     fun initialized() {
         DBTags(
@@ -20,7 +26,9 @@ class DBTagsTest {
         }
     }
 
-
+    /**
+     * Adding tag to database
+     */
     @Test
     fun add() {
         DBTags(
@@ -35,6 +43,9 @@ class DBTagsTest {
     }
 
 
+    /**
+     * Search by uri
+     */
     @Test
     fun searchByUri() {
         DBTags(

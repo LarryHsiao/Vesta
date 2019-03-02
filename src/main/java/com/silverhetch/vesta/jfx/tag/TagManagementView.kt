@@ -50,7 +50,8 @@ class TagManagementView : Initializable {
         listView.items.addAll(tags.all().values)
     }
 
-    fun onNewtagClicked() {
+    @FXML
+    private fun onNewtagClicked() {
         if (newTagField.text.isEmpty()) {
             return
         }
