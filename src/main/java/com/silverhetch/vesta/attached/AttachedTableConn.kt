@@ -6,6 +6,10 @@ import java.sql.Connection
  * Connection to database which have table attached_tags
  */
 class AttachedTableConn(private val conn: Connection) {
+
+    /**
+     * Initial the table if not exist
+     */
     fun init() {
         conn.createStatement().execute("""
             create table if not exists attachments
