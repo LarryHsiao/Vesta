@@ -12,11 +12,13 @@ import com.silverhetch.vesta.jfx.target.TargetManagementView
 import com.silverhetch.vesta.tag.DBTags
 import com.silverhetch.vesta.target.Targets
 import com.silverhetch.vesta.target.VestaTargets
+import de.codecentric.centerdevice.javafxsvg.SvgImageLoaderFactory
 import javafx.application.Application
 import javafx.application.Platform
 import javafx.fxml.FXMLLoader
 import javafx.scene.Parent
 import javafx.scene.Scene
+import javafx.scene.image.Image
 import javafx.scene.input.Clipboard
 import javafx.scene.input.KeyCode.V
 import javafx.scene.input.KeyCodeCombination
@@ -42,7 +44,9 @@ class VestaApplication : Application() {
     )
 
     override fun start(stage: Stage) {
+        SvgImageLoaderFactory.install()
         val scene = Scene(rootView(), 640.0, 480.0)
+        stage.icons.add(Image(javaClass.getResource("/icons/stock-trim.png").toString()))
         scene.accelerators[KeyCodeCombination(V, CONTROL_DOWN)] = Runnable {
             inputContent(Clipboard.getSystemClipboard())
         }
