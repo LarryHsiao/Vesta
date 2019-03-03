@@ -12,6 +12,10 @@ import java.util.concurrent.Executors
  *
  * This class is good for small files(<10MB) because we don`t have any progress monitoring
  * which may cause UI hangs too long.
+ *
+ * @todo #11 implement with singleton pattern
+ *
+ * @todo #12 observer pattern for updating current download list.
  */
 class DownloadServiceImpl(private val downloads: Downloads,
                           private val targetDir: File) : DownloadService {
