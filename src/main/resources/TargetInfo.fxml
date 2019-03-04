@@ -1,7 +1,10 @@
 <?xml version="1.0" encoding="UTF-8"?>
 
-<?import javafx.scene.control.Label?>
-<Label xmlns="http://javafx.com/javafx"
-    xmlns:fx="http://javafx.com/fxml"
-    fx:id="label"
-    fx:controller="com.silverhetch.vesta.jfx.target.info.TargetInfoView" />
+<?import javafx.scene.control.Label?><?import javafx.scene.layout.VBox?><?import javafx.scene.control.ListView?>
+<VBox xmlns="http://javafx.com/javafx"
+    fx:controller="com.silverhetch.vesta.jfx.target.info.TargetInfoView"
+    xmlns:fx="http://javafx.com/fxml">
+    <Label fx:id="label" />
+
+    <ListView fx:id="tagList"/>
+</VBox>

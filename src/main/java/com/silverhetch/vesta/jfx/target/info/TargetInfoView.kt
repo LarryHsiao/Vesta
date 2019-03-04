@@ -1,10 +1,12 @@
 package com.silverhetch.vesta.jfx.target.info
 
+import com.silverhetch.vesta.attached.tags.AttachedTag
 import com.silverhetch.vesta.attached.tags.AttachedTags
 import com.silverhetch.vesta.target.Target
 import javafx.fxml.FXML
 import javafx.fxml.Initializable
 import javafx.scene.control.Label
+import javafx.scene.control.ListView
 import java.net.URL
 import java.util.*
 
@@ -13,9 +15,11 @@ import java.util.*
  */
 class TargetInfoView : Initializable {
     @FXML private lateinit var label: Label
+    @FXML private lateinit var tagList: ListView<AttachedTag>
     private lateinit var target: Target
 
     override fun initialize(url: URL?, bundle: ResourceBundle?) {
+        tagList.setCellFactory { AttachedTagCell() }
     }
 
     /**
@@ -24,8 +28,7 @@ class TargetInfoView : Initializable {
     fun loadTarget(target: Target, attachedTags: AttachedTags) {
         this.target = target
         label.text = target.name() + " "
-        attachedTags.all().forEach {
-            label.text += it.value.tag().name() + " "
-        }
+        tagList.items.clear()
+        tagList.items.addAll(attachedTags.all().values)
     }
 }
