@@ -2,6 +2,7 @@ package com.silverhetch.vesta.jfx.target.info
 
 import com.silverhetch.vesta.attached.tags.AttachedTag
 import com.silverhetch.vesta.attached.tags.AttachedTags
+import com.silverhetch.vesta.jfx.target.TargetListMouseEvent
 import com.silverhetch.vesta.tag.uri.TagUriImpl
 import com.silverhetch.vesta.target.Target
 import javafx.fxml.FXML
@@ -27,6 +28,7 @@ class TargetInfoView : Initializable {
         tagList.setCellFactory { AttachedTagCell() }
         tagList.setOnDragOver { onDraggedOver(it) }
         tagList.setOnDragDropped { onDraggedDropped(it) }
+        tagList.onMouseClicked = AttachedTagListMouseEvent(tagList)
     }
 
     private fun onDraggedDropped(it: DragEvent) {
