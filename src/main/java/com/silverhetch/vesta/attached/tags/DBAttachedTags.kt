@@ -3,6 +3,7 @@ package com.silverhetch.vesta.attached.tags
 import com.silverhetch.vesta.attached.AttachedTableConn
 import com.silverhetch.vesta.tag.DBTag
 import com.silverhetch.vesta.tag.Tag
+import com.silverhetch.vesta.tag.uri.TagUri
 import java.sql.Connection
 
 /**
@@ -35,11 +36,19 @@ class DBAttachedTags(private val connection: Connection, private val targetId: L
         }
     }
 
-    override fun add(tag: Tag) {
+    override fun add(uri: TagUri) {
+        add(uri.id())
+    }
+
+    private fun add(id: Long) {
         connection.prepareStatement("""insert into attachments(target_id, tag_id) values ( ? ,? );""").use {
             it.setLong(1, targetId)
-            it.setLong(2, tag.id())
+            it.setLong(2, id)
             it.execute()
         }
+    }
+
+    override fun add(tag: Tag) {
+        add(tag.id())
     }
 }
