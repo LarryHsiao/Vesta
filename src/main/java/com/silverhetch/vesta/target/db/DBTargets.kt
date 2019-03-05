@@ -40,8 +40,19 @@ class DBTargets(
     }
 
     override fun byKeyword(keyword: String): Map<String, Target> {
-        connection.prepareStatement("""select * from targets where name like ?;""").use { statement ->
+        connection.prepareStatement("""
+select targets.*
+from targets
+       left join attachments
+                 on targets.id = attachments.TARGET_ID
+       left join tags
+                 on tags.id = attachments.tag_id
+where tags.name like ?
+   or targets.name like ?
+group by targets.name;
+        """).use { statement ->
             statement.setString(1, "%$keyword%")
+            statement.setString(2, "%$keyword%")
             val targets = LinkedHashMap<String, Target>()
             statement.executeQuery().use { resultSet ->
                 while (resultSet.next()) {
